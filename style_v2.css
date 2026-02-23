@@ -301,6 +301,34 @@ html {
     font-size: 0.9rem;
 }
 
+.calc-table td:nth-child(3) {
+    width: 70px;
+    /* Constrain the quantity column */
+    text-align: center;
+}
+
+.qty-input {
+    width: 60px;
+    /* Fixed small width */
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 6px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: inherit;
+}
+
+.rm-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 1.4rem;
+    padding-left: 15px;
+    line-height: 1;
+}
+
 .total-line {
     display: flex;
     justify-content: space-between;
