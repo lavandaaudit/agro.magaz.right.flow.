@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Right Flow System | Конфігуратор</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style_v2.css">
+</head>
+
+<body class="split-layout">
+    <div class="main-wrapper">
+        <!-- Left Side: Hero Image & Slogan -->
+        <section class="hero-panel">
+            <video id="hero-video" class="hero-bg" autoplay muted playsinline></video>
+            <div class="video-overlay"></div>
+            <div class="hero-content">
+                <div class="logo">
+                    <span class="logo-accent">RIGHT</span> FLOW
+                </div>
+                <div class="slogan">
+                    <h1>Інтелект <br><span class="text-gradient">вашого поля</span></h1>
+                    <p>Точність у кожній краплі. <br>Ефективність у кожному гектарі.</p>
+                </div>
+                <div class="hero-footer">
+                    <p>Right Flow System © 2026</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Side: Compact Configurator -->
+        <aside class="config-panel">
+            <header class="config-header">
+                <h2>Конфігуратор системи</h2>
+                <div class="contact-mini">+380 (XX) XXX XX XX</div>
+            </header>
+
+            <div class="scroll-container">
+                <!-- Products Grid (Compact) -->
+                <div class="compact-grid">
+                    <!-- Product 1 -->
+                    <div class="card-mini" id="p1" data-id="1">
+                        <div class="card-img open-details" data-id="1">
+                            <img src="assets/smart.png" alt="SMART">
+                            <div class="img-overlay">Опис</div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Right Flow SMART</h3>
+                            <div class="card-meta">
+                                <span class="price">$3465.00</span>
+                                <button class="add-to-calc-btn" data-id="1" data-price="3465.00"
+                                    data-name="Right Flow SMART">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="card-mini" id="p2" data-id="2">
+                        <div class="card-img open-details" data-id="2">
+                            <img src="assets/visual.png" alt="Visual">
+                            <div class="img-overlay">Опис</div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Візуальний контроль</h3>
+                            <div class="card-meta">
+                                <span class="price">$87.12</span>
+                                <button class="add-to-calc-btn" data-id="2" data-price="87.12"
+                                    data-name="Візуальний контроль">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="card-mini" id="p3" data-id="3">
+                        <div class="card-img placeholder open-details" data-id="3">
+                            <span>Фото</span>
+                            <div class="img-overlay">Опис</div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Електронний контроль</h3>
+                            <div class="card-meta">
+                                <span class="price">$243.50</span>
+                                <button class="add-to-calc-btn" data-id="3" data-price="243.50"
+                                    data-name="Електронний контроль">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="card-mini" id="p4" data-id="4">
+                        <div class="card-img placeholder open-details" data-id="4">
+                            <span>Фото</span>
+                            <div class="img-overlay">Опис</div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Вузол подачі 2*26</h3>
+                            <div class="card-meta">
+                                <span class="price">$2006.00</span>
+                                <button class="add-to-calc-btn" data-id="4" data-price="2006.00"
+                                    data-name="Вузол подачі 2*26">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Area -->
+                <div class="calculator-area glass">
+                    <div class="calc-top">
+                        <h3>Ваша смета</h3>
+                        <div class="vat-toggle">
+                            <input type="radio" name="vat" id="no-vat" value="0" checked>
+                            <label for="no-vat">Без ПДВ</label>
+                            <input type="radio" name="vat" id="with-vat" value="20">
+                            <label for="with-vat">З ПДВ</label>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="calc-table">
+                            <tbody id="calc-items-body">
+                                <!-- JS Injected Rows -->
+                            </tbody>
+                        </table>
+                        <div id="empty-cart-msg" class="empty-msg">Оберіть товари вище</div>
+                    </div>
+
+                    <div class="calc-bottom">
+                        <div class="total-line">
+                            <span class="total-price" id="total-price">$0.00</span>
+                            <button class="btn-primary open-modal">Замовити рахунок</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Detailed Product Modal -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content glass wide-modal">
+            <span class="close-details">&times;</span>
+            <div class="details-layout">
+                <div class="details-img">
+                    <img src="" alt="" id="modal-img">
+                </div>
+                <div class="details-info">
+                    <h2 id="modal-title">Назва товару</h2>
+                    <div class="modal-price" id="modal-price">$0.00</div>
+                    <div class="modal-desc" id="modal-desc"></div>
+                    <button class="btn-primary modal-add-btn" id="modal-add-btn">Додати</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <h2>Заявка</h2>
+            <form id="order-form" action="https://formsubmit.co/2294598@gmail.com" method="POST">
+                <!-- Hidden Configuration for FormSubmit -->
+                <input type="hidden" name="_subject" value="Нове замовлення - Right Flow System">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+
+                <div class="form-group">
+                    <label>Ім'я</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" name="phone" id="phone" required>
+                </div>
+                <!-- This will be populated by JS -->
+                <textarea name="order_details" id="order-details-hidden" style="display:none"></textarea>
+
+                <div id="summary-in-form"></div>
+                <button type="submit" class="btn-primary wide">Надіслати замовлення</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
