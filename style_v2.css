@@ -1,7 +1,6 @@
 :root {
     --bg-dark: #0a0a0b;
     --panel-bg: transparent;
-    /* Removed dark background */
     --accent: #ff3e3e;
     --text: #ffffff;
     --text-dim: #b0b0b0;
@@ -33,7 +32,7 @@ html {
     z-index: 1;
 }
 
-/* --- Left Side: Hero (Now as Background) --- */
+/* --- Left Side: Hero --- */
 .hero-panel {
     position: fixed;
     top: 0;
@@ -75,7 +74,6 @@ html {
     flex-direction: column;
     justify-content: space-between;
     pointer-events: none;
-    /* Let clicks pass through to background if needed */
 }
 
 .logo {
@@ -121,11 +119,8 @@ html {
 .config-panel {
     width: 500px;
     margin-left: auto;
-    /* Push to right */
     background: transparent;
-    /* Removed background entirely */
     border-left: none;
-    /* Removed border */
     display: flex;
     flex-direction: column;
     z-index: 10;
@@ -159,7 +154,6 @@ html {
 
 .card-mini {
     background: rgba(0, 0, 0, 0.4);
-    /* Solid enough to read but transparent */
     backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
@@ -372,21 +366,12 @@ html {
     max-width: 500px;
     margin: 10vh auto;
     background: rgba(15, 15, 18, 0.85);
-    /* Slightly transparent */
     backdrop-filter: blur(20px);
     padding: 40px;
     border-radius: 30px;
     border: 1px solid var(--glass-border);
     position: relative;
     box-shadow: 0 30px 100px rgba(0, 0, 0, 0.8);
-}
-
-/* Simplified Order Form Styles */
-.order-form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 30px;
 }
 
 .btn-color {
@@ -499,5 +484,27 @@ html {
 
     .hero-footer {
         display: none;
+    }
+
+    /* Fix card elements falling out on mobile */
+    .card-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 120px;
+    }
+
+    .card-meta {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .card-meta div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
