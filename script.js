@@ -247,6 +247,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === orderModal) orderModal.style.display = 'none';
     };
 
+    // --- Stepper Logic (Plus/Minus Buttons) ---
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('step-btn')) {
+            const id = parseInt(e.target.dataset.id);
+            const input = document.querySelector(`.card-qty[data-id="${id}"]`);
+            if (!input) return;
+
+            let val = parseInt(input.value);
+            if (e.target.classList.contains('plus')) {
+                val++;
+            } else if (e.target.classList.contains('minus') && val > 1) {
+                val--;
+            }
+            input.value = val;
+
+            // Update cart if item already exists
+            const existing = cart.find(i => i.id === id);
+            if (existing) {
+                existing.qty = val;
+                renderCart();
+            }
+        }
+    });
+
     // Initial Render
     renderCart();
 });
