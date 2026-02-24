@@ -216,25 +216,23 @@ html {
 
 .card-meta {
     display: flex;
-    flex-direction: column;
-    /* Stack price and controls */
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Wrap if too tight */
     gap: 8px;
     width: 100%;
     margin-top: auto;
-    /* Push to bottom */
 }
 
-.card-meta>span.price {
-    display: block;
+.card-meta span.price {
+    flex-shrink: 0;
 }
 
-.card-meta>.stepper-container,
-.card-meta>div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.card-meta .add-to-calc-btn:not(.stepper-container .add-to-calc-btn),
+.stepper-container {
+    margin-left: auto;
+    /* Force to the right */
 }
 
 .price {
@@ -570,9 +568,11 @@ html {
     }
 
     .card-meta {
-        flex-direction: column;
-        align-items: flex-start !important;
-        gap: 10px;
+        flex-direction: row;
+        /* Keep row but allow wrap */
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
         width: 100%;
     }
 
@@ -584,8 +584,8 @@ html {
     }
 
     .stepper-container {
-        width: 100%;
-        justify-content: space-between;
-        padding: 6px;
+        width: auto;
+        margin-left: auto;
+        padding: 4px;
     }
 }
