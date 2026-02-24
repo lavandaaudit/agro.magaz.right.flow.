@@ -75,11 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Pre-setting products 2 and 3 as requested ("товар 2 та 3 - кількість одразу постав")
-    let cart = [
-        { ...products[2], qty: 1 },
-        { ...products[3], qty: 1 }
-    ];
+    // Initial cart state is empty
+    let cart = [];
     let currentVat = 0;
 
     // --- Calculator Logic ---
