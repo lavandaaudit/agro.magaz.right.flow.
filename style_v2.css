@@ -202,14 +202,36 @@ html {
 
 .card-info {
     padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+    /* Increased to accommodate stepper */
 }
 
 .card-info h3 {
     font-size: 0.95rem;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .card-meta {
+    display: flex;
+    flex-direction: column;
+    /* Stack price and controls */
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+    /* Push to bottom */
+}
+
+.card-meta>span.price {
+    display: block;
+}
+
+.card-meta>.stepper-container,
+.card-meta>div {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -361,12 +383,14 @@ html {
 .qty-input::-webkit-outer-spin-button,
 .qty-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 
 /* Firefox */
 .qty-input[type=number] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 .total-line {
