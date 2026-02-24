@@ -23,10 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (retryCount <= totalVideos) {
                 setTimeout(skipToNext, 100);
             } else {
-                console.log("No video assets found.");
-                video.style.display = 'none';
-                const overlay = document.querySelector('.video-overlay');
-                if (overlay) overlay.style.background = 'url("assets/bg.jpg") center/cover';
+                console.log("No video assets found. Using static background.");
+                video.style.opacity = '0';
+                const panel = document.querySelector('.hero-panel');
+                if (panel) {
+                    panel.style.background = 'url("assets/bg.png") center/cover no-repeat fixed';
+                }
             }
         });
     }
