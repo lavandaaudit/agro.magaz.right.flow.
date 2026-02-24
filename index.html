@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="style_v2.css">
 </head>
 
-<body class="split-layout">
+<body>
     <div class="main-wrapper">
-        <!-- Left Side: Hero Image & Slogan -->
+        <!-- Background Hero -->
         <section class="hero-panel">
-            <video id="hero-video" class="hero-bg" autoplay muted playsinline></video>
+            <video id="hero-video" class="hero-bg" autoplay muted playsinline loop></video>
             <div class="video-overlay"></div>
             <div class="hero-content">
                 <div class="logo">
@@ -31,15 +31,14 @@
             </div>
         </section>
 
-        <!-- Right Side: Compact Configurator -->
+        <!-- Sidebar Configurator (Now with transparent backing) -->
         <aside class="config-panel">
             <header class="config-header">
-                <h2>Конфігуратор системи</h2>
+                <h2>Конфігуратор</h2>
                 <div class="contact-mini">right flow</div>
             </header>
 
             <div class="scroll-container">
-                <!-- Products Grid (Compact) -->
                 <div class="compact-grid">
                     <!-- Product 1 -->
                     <div class="card-mini" id="p1" data-id="1">
@@ -51,8 +50,7 @@
                             <h3>Right Flow SMART</h3>
                             <div class="card-meta">
                                 <span class="price">$3465.00</span>
-                                <button class="add-to-calc-btn" data-id="1" data-price="3465.00"
-                                    data-name="Right Flow SMART">+</button>
+                                <button class="add-to-calc-btn" data-id="1">+</button>
                             </div>
                         </div>
                     </div>
@@ -67,49 +65,54 @@
                             <h3>Візуальний контроль</h3>
                             <div class="card-meta">
                                 <span class="price">$87.12</span>
-                                <button class="add-to-calc-btn" data-id="2" data-price="87.12"
-                                    data-name="Візуальний контроль">+</button>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="number" class="qty-input card-qty" value="1" min="1" data-id="2"
+                                        style="width: 50px;">
+                                    <button class="add-to-calc-btn" data-id="2">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Product 3 -->
                     <div class="card-mini" id="p3" data-id="3">
-                        <div class="card-img placeholder open-details" data-id="3">
-                            <img src="assets/rtr.png" alt="Visual">
+                        <div class="card-img open-details" data-id="3">
+                            <img src="assets/rtr.png" alt="Electronic">
                             <div class="img-overlay">Опис</div>
                         </div>
                         <div class="card-info">
                             <h3>Електронний контроль</h3>
                             <div class="card-meta">
                                 <span class="price">$243.50</span>
-                                <button class="add-to-calc-btn" data-id="3" data-price="243.50"
-                                    data-name="Електронний контроль">+</button>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="number" class="qty-input card-qty" value="1" min="1" data-id="3"
+                                        style="width: 50px;">
+                                    <button class="add-to-calc-btn" data-id="3">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Product 4 -->
                     <div class="card-mini" id="p4" data-id="4">
-                        <div class="card-img placeholder open-details" data-id="4">
-                            <img src="assets/sd.png" alt="Visual">
+                        <div class="card-img open-details" data-id="4">
+                            <img src="assets/sd.png" alt="Pump">
                             <div class="img-overlay">Опис</div>
                         </div>
                         <div class="card-info">
                             <h3>Вузол подачі 2*26</h3>
                             <div class="card-meta">
                                 <span class="price">$2006.00</span>
-                                <button class="add-to-calc-btn" data-id="4" data-price="2006.00"
-                                    data-name="Вузол подачі 2*26">+</button>
+                                <button class="add-to-calc-btn" data-id="4">+</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Calculator Area -->
-                <div class="calculator-area glass">
+                <div class="calculator-area">
                     <div class="calc-top">
-                        <h3>Ваша смета</h3>
+                        <h3>Смета</h3>
                         <div class="vat-toggle">
                             <input type="radio" name="vat" id="no-vat" value="0" checked>
                             <label for="no-vat">Без ПДВ</label>
@@ -120,17 +123,15 @@
 
                     <div class="table-wrapper">
                         <table class="calc-table">
-                            <tbody id="calc-items-body">
-                                <!-- JS Injected Rows -->
-                            </tbody>
+                            <tbody id="calc-items-body"></tbody>
                         </table>
-                        <div id="empty-cart-msg" class="empty-msg">Оберіть товари вище</div>
+                        <div id="empty-cart-msg" class="empty-msg">Оберіть товари</div>
                     </div>
 
                     <div class="calc-bottom">
                         <div class="total-line">
                             <span class="total-price" id="total-price">$0.00</span>
-                            <button class="btn-primary open-modal">Замовити рахунок</button>
+                            <button class="btn-primary open-modal">Замовити</button>
                         </div>
                     </div>
                 </div>
@@ -138,16 +139,16 @@
         </aside>
     </div>
 
-    <!-- Detailed Product Modal -->
+    <!-- Product Details Modal -->
     <div id="details-modal" class="modal">
-        <div class="modal-content glass wide-modal">
+        <div class="modal-content wide-modal">
             <span class="close-details">&times;</span>
             <div class="details-layout">
                 <div class="details-img">
                     <img src="" alt="" id="modal-img">
                 </div>
                 <div class="details-info">
-                    <h2 id="modal-title">Назва товару</h2>
+                    <h2 id="modal-title">Товар</h2>
                     <div class="modal-price" id="modal-price">$0.00</div>
                     <div class="modal-desc" id="modal-desc"></div>
                     <button class="btn-primary modal-add-btn" id="modal-add-btn">Додати</button>
@@ -156,30 +157,27 @@
         </div>
     </div>
 
-    <!-- Order Modal -->
+    <!-- Order Modal (Simplified) -->
     <div id="order-modal" class="modal">
-        <div class="modal-content glass">
+        <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2>Заявка</h2>
+            <h2 style="margin-bottom: 20px;">Заявка</h2>
             <form id="order-form" action="https://formsubmit.co/2294598@gmail.com" method="POST">
-                <!-- Hidden Configuration for FormSubmit -->
                 <input type="hidden" name="_subject" value="Нове замовлення - Right Flow System">
-                <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_captcha" value="false">
 
-                <div class="form-group">
-                    <label>Ім'я</label>
-                    <input type="text" name="name" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label>Телефон</label>
-                    <input type="tel" name="phone" id="phone" required>
-                </div>
-                <!-- This will be populated by JS -->
+                <!-- Minimal Inputs -->
+                <input type="text" name="name" id="name" placeholder="Ім'я" class="form-input-minimal" required>
+                <input type="tel" name="phone" id="phone" placeholder="Телефон" class="form-input-minimal" required>
                 <textarea name="order_details" id="order-details-hidden" style="display:none"></textarea>
 
                 <div id="summary-in-form"></div>
-                <button type="submit" class="btn-primary wide">Надіслати замовлення</button>
+
+                <!-- Green and Red Buttons (requested) -->
+                <div class="order-form-grid">
+                    <button type="button" class="btn-color btn-red close-modal"></button>
+                    <button type="submit" class="btn-color btn-green"></button>
+                </div>
             </form>
         </div>
     </div>
