@@ -318,6 +318,57 @@ html {
     padding-left: 15px;
 }
 
+/* Stepper Styles */
+.stepper-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+}
+
+.step-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.step-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.stepper-container .qty-input {
+    width: 35px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Chrome, Safari, Edge, Opera - Remove arrows */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.qty-input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .total-line {
     display: flex;
     justify-content: space-between;
@@ -506,5 +557,11 @@ html {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    .stepper-container {
+        width: 100%;
+        justify-content: space-between;
+        padding: 6px;
     }
 }
