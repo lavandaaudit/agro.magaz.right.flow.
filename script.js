@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailsModal = document.getElementById('details-modal');
     const orderModal = document.getElementById('order-modal');
 
-    // --- Video Background Logic (Fixed to avoid infinite loops) ---
+    // --- Video Background Logic ---
     const video = document.getElementById('hero-video');
     let currentVideoIdx = 1;
     let retryCount = 0;
@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (retryCount <= totalVideos) {
                 setTimeout(skipToNext, 100);
             } else {
-                console.log("No video assets found, stopping search.");
-                video.style.display = 'none'; // Only hide the video element
+                console.log("No video assets found.");
+                video.style.display = 'none';
                 const overlay = document.querySelector('.video-overlay');
-                if (overlay) overlay.style.display = 'none'; // Also hide video-specific overlay
+                if (overlay) overlay.style.background = 'url("assets/bg.jpg") center/cover';
             }
         });
     }
@@ -63,19 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 3,
             name: "Електронний контроль",
             price: 243.50,
-            image: "assets/rtr.png", // placeholder
+            image: "assets/rtr.png",
             desc: "Електронна система контролю виливу для максимальної точності. <ul><li>Переваги:</li><li>Електронні витратоміри на кожен рядок</li><li>Миттєве сповіщення про забиття</li><li>Точність вимірювання до 0.5%</li><li>Інтеграція з основним терміналом SMART</li></ul>"
         },
         4: {
             id: 4,
             name: "Вузол подачі 2*26",
             price: 2006.00,
-            image: "assets/sd.png", // placeholder
+            image: "assets/sd.png",
             desc: "Готовий до встановлення насосний модуль високої потужності. <ul><li>Склад вузла:</li><li>Міцний металевий кронштейн</li><li>Два насоси продуктивністю 26 л/хв</li><li>Фільтр тонкої очистки з нержавіючої сіткою</li><li>Набір фітингів та затискачів</li></ul>"
         }
     };
 
-    let cart = [];
+    // Pre-setting products 2 and 3 as requested ("товар 2 та 3 - кількість одразу постав")
+    let cart = [
+        { ...products[2], qty: 1 },
+        { ...products[3], qty: 1 }
+    ];
     let currentVat = 0;
 
     // --- Calculator Logic ---
@@ -85,23 +89,36 @@ document.addEventListener('DOMContentLoaded', () => {
         let total = subtotal * (1 + currentVat / 100);
         totalPriceEl.textContent = `$${total.toFixed(2)}`;
 
-        // Update order form summary
         const summaryInForm = document.getElementById('summary-in-form');
         const hiddenDetails = document.getElementById('order-details-hidden');
 
         if (summaryInForm) {
             let details = cart.map(i => `${i.name} x${i.qty} ($${(i.price * i.qty).toFixed(2)})`).join('<br>');
-            summaryInForm.innerHTML = `<strong>Склад замовлення (${currentVat > 0 ? 'з ПДВ' : 'без ПДВ'}):</strong><br>${details}<br><br><strong>Разом: $${total.toFixed(2)}</strong>`;
+            summaryInForm.innerHTML = `<div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px; font-size: 0.9rem;">
+                <strong>${currentVat > 0 ? 'З ПДВ' : 'Без ПДВ'}:</strong><br>${details}<br><br>
+                <strong style="color:var(--accent); font-size: 1.2rem;">Разом: $${total.toFixed(2)}</strong>
+            </div>`;
 
-            // Plain text for email
             let plainDetails = cart.map(i => `- ${i.name} x${i.qty}: $${(i.price * i.qty).toFixed(2)}`).join('\n');
             if (hiddenDetails) {
-                hiddenDetails.value = `Тип рахунку: ${currentVat > 0 ? 'З ПДВ' : 'Без ПДВ'}\n\nСклад:\n${plainDetails}\n\nРазом: $${total.toFixed(2)}`;
+                hiddenDetails.value = `Тип: ${currentVat > 0 ? 'З ПДВ' : 'Без ПДВ'}\n\nСклад:\n${plainDetails}\n\nРазом: $${total.toFixed(2)}`;
             }
         }
     }
 
     function renderCart() {
+        // Sync main buttons state
+        document.querySelectorAll('.add-to-calc-btn').forEach(btn => {
+            const id = parseInt(btn.dataset.id);
+            if (cart.some(i => i.id === id)) {
+                btn.classList.add('added');
+                btn.textContent = '✓';
+            } else {
+                btn.classList.remove('added');
+                btn.textContent = '+';
+            }
+        });
+
         if (cart.length === 0) {
             calcBody.innerHTML = '';
             emptyMsg.style.display = 'block';
@@ -116,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.name}</td>
-                <td>$${item.price.toFixed(2)}</td>
                 <td>
                     <input type="number" class="qty-input" value="${item.qty}" min="1" data-id="${item.id}">
                 </td>
@@ -136,7 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const item = cart.find(i => i.id === id);
                 if (item && val > 0) {
                     item.qty = val;
-                    renderCart();
+                    updateTotals();
+                    // Update the row total display without full re-render for smoothness
+                    const row = e.target.closest('tr');
+                    row.cells[2].textContent = `$${(item.price * item.qty).toFixed(2)}`;
                 }
             });
         });
@@ -144,17 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.rm-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = parseInt(e.target.dataset.index);
-                const removedId = cart[idx].id;
                 cart.splice(idx, 1);
-
-                // Reset main button if no more in cart
-                if (!cart.some(i => i.id === removedId)) {
-                    const mainBtn = document.querySelector(`.add-to-calc-btn[data-id="${removedId}"]`);
-                    if (mainBtn) {
-                        mainBtn.classList.remove('added');
-                        mainBtn.textContent = 'Додати до розрахунку';
-                    }
-                }
                 renderCart();
             });
         });
@@ -176,20 +185,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = parseInt(btn.dataset.id);
             const product = products[id];
 
+            // Check if there is a quantity input on the card
+            const cardQtyInput = document.querySelector(`.card-qty[data-id="${id}"]`);
+            const qtyToAdd = cardQtyInput ? parseInt(cardQtyInput.value) : 1;
+
             const existing = cart.find(i => i.id === id);
             if (existing) {
-                existing.qty++;
+                // If it's already in cart, we can either remove or add more. 
+                // Let's make it a toggle but if qty input is present, maybe just update qty.
+                // Re-aligned with previous behavior: toggle remove if exists, but now support adding specific amount.
+                cart = cart.filter(i => i.id !== id);
             } else {
-                cart.push({ ...product, qty: 1 });
+                cart.push({ ...product, qty: qtyToAdd });
             }
-
-            btn.classList.add('added');
-            btn.textContent = 'У сметі ✓';
             renderCart();
         });
     });
 
-    // --- Modal Logic (Details) ---
+    // --- Modal Logic ---
     document.querySelectorAll('.open-details').forEach(el => {
         el.addEventListener('click', () => {
             const id = parseInt(el.dataset.id);
@@ -204,17 +217,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             detailsModal.style.display = 'block';
 
-            // Modal Add button
             const modalAdd = document.getElementById('modal-add-btn');
             modalAdd.onclick = () => {
                 const mainBtn = document.querySelector(`.add-to-calc-btn[data-id="${id}"]`);
-                mainBtn.click();
+                if (!cart.some(i => i.id === id)) mainBtn.click();
                 detailsModal.style.display = 'none';
             };
         });
     });
 
-    // --- Header / Main Modal logic ---
     document.querySelectorAll('.open-modal').forEach(btn => {
         btn.addEventListener('click', () => {
             if (cart.length === 0) {
@@ -237,12 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === orderModal) orderModal.style.display = 'none';
     };
 
-    // --- Form Submission ---
-    document.getElementById('order-form').addEventListener('submit', (e) => {
-        // We let the form submit to FormSubmit.co
-        const name = document.getElementById('name').value;
-        const total = totalPriceEl.textContent;
-        // The page will redirect to FormSubmit, so we just log or show a temporary msg
-        console.log('Sending order for ' + name);
-    });
+    // Initial Render
+    renderCart();
 });
