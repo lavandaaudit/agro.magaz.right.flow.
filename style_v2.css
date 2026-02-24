@@ -460,14 +460,31 @@ html {
     .config-panel {
         width: 100%;
         border-radius: 0;
-        margin-top: 50vh;
+        margin-top: 55vh;
+        background: rgba(0, 0, 0, 0.5);
     }
 
     .hero-panel {
-        padding: 30px 20px;
+        padding: 40px 20px;
+        height: 55vh;
+        position: fixed;
+    }
+
+    .hero-content {
+        justify-content: flex-start;
+        gap: 15px;
     }
 
     .slogan h1 {
-        font-size: 3rem;
+        font-size: 2.3rem;
+        margin-bottom: 10px;
+    }
+
+    .slogan p {
+        font-size: 1.1rem;
+    }
+
+    .hero-footer {
+        display: none;
     }
 }
